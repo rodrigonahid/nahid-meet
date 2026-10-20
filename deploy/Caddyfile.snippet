@@ -1,0 +1,6 @@
+# Adicionar em /srv/caddy/Caddyfile (usar o mesmo emissor ZeroSSL dos outros sites).
+meet.rodrigonahid.com.br {
+	encode zstd gzip
+	# nginx da imagem web (HTTP na 8000); websockets de XMPP e colibri passam por aqui.
+	reverse_proxy nahid-meet-web:8000
+}

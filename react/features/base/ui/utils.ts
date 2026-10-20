@@ -1,5 +1,7 @@
+// Modificado no Nahid Meet: aplica a camada de marca (brandTokens) depois dos tokens do Jitsi.
 import { merge } from 'lodash-es';
 
+import { brandTokens } from './brandTokens';
 import * as jitsiTokens from './jitsiTokens.json';
 import * as tokens from './tokens.json';
 import { IPalette } from './types';
@@ -15,7 +17,7 @@ import { IPalette } from './types';
  * @returns {Object}
  */
 export function createColorTokens(colorMap: Object, customTokens?: Partial<IPalette>): any {
-    const allTokens = merge({}, tokens, jitsiTokens, customTokens || {});
+    const allTokens = merge({}, tokens, jitsiTokens, brandTokens, customTokens || {});
     const result: any = {};
 
     // First pass: resolve tokens that reference allTokens directly
@@ -68,7 +70,7 @@ export function createColorTokens(colorMap: Object, customTokens?: Partial<IPale
  * @returns {Object}
  */
 export function createTypographyTokens(typography: Object): any {
-    const allTokens = merge({}, tokens, jitsiTokens);
+    const allTokens = merge({}, tokens, jitsiTokens, brandTokens);
 
     return Object.entries(typography)
         .reduce((result, [ token, value ]: [any, any]) => {

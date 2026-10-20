@@ -1,0 +1,26 @@
+# Nahid Meet: override do docker-compose.yml oficial (docker-jitsi-meet stable-11248).
+# - web usa a imagem própria e entra na rede "web" do Caddy, sem publicar portas;
+# - limites de memória dos containers, coerentes com VIDEOBRIDGE/JICOFO_MAX_MEMORY.
+# Requer Docker Compose >= 2.24 (por causa do !reset).
+services:
+    web:
+        image: ${NAHID_MEET_IMAGE:-ghcr.io/rodrigonahid/nahid-meet-web:stable-11248}
+        container_name: nahid-meet-web
+        ports: !reset []
+        mem_limit: 256m
+        networks:
+            meet.jitsi:
+            web:
+
+    prosody:
+        mem_limit: 256m
+
+    jicofo:
+        mem_limit: 640m
+
+    jvb:
+        mem_limit: 1200m
+
+networks:
+    web:
+        external: true

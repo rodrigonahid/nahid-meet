@@ -1,0 +1,15 @@
+Nahid Meet
+Copyright 2026 Rodrigo Nahid
+
+Este produto é um fork do Jitsi Meet (https://github.com/jitsi/jitsi-meet),
+distribuído sob a Apache License, Version 2.0 (ver LICENSE).
+
+Jitsi Meet
+Copyright 8x8, Inc. e contribuidores do Jitsi Meet.
+
+"Jitsi" e o logo do Jitsi são marcas de seus respectivos donos. O Nahid Meet
+não é afiliado nem endossado pelo projeto Jitsi; o nome aparece apenas para
+indicar a origem do código ("baseado no Jitsi Meet").
+
+Os arquivos alterados em relação ao upstream estão listados em MODIFICATIONS.md
+e trazem um comentário "Modificado no Nahid Meet" quando o formato permite.

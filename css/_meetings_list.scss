@@ -1,6 +1,7 @@
+// Modificado no Nahid Meet: cores fixas trocadas por tokens do design system.
 .meetings-list {
     font-size: 0.875rem;
-    color: #253858;
+    color: $nd-text;
     line-height: 1.25rem;
     text-align: left;
     text-overflow: ellipsis;
@@ -19,7 +20,7 @@
         flex-direction: column;
 
         .description {
-            color: #2f3237;
+            color: $nd-text-muted;
             font-size: 0.875rem;
             line-height: 1.125rem;
             margin-bottom: 16px;
@@ -34,7 +35,7 @@
 
     .meetings-list-empty-button {
         align-items: center;
-        color: #0163FF;
+        color: $nd-accent-text;
         cursor: pointer;
         display: flex;
         font-size: 0.875rem;
@@ -48,7 +49,7 @@
     }
 
     .button {
-        background: #0074E0;
+        background: $nd-accent;
         border-radius: 4px;
         color: #FFFFFF;
         display: flex;
@@ -65,9 +66,9 @@
     }
 
     .item {
-        background: #fff;
+        background: $nd-surface-raised;
         box-sizing: border-box;
-        border-radius: 4px;
+        border-radius: $nd-radius-md;
         display: inline-flex;
         margin: 4px 4px 0 4px;
         min-height: 60px;
@@ -108,7 +109,7 @@
         }
 
         .subtitle {
-            color: #5E6D7A;
+            color: $nd-text-muted;
             font-weight: normal;
             font-size: 0.75rem;
             line-height: 1rem;
@@ -129,7 +130,7 @@
 
         &.with-click-handler:hover,
         &.with-click-handler:focus {
-            background-color: #c7ddff;
+            background-color: $nd-surface-hover;
         }
 
         .add-button {
@@ -157,7 +158,7 @@
         position: absolute;
 
         &>svg {
-            fill: #0074e0;
+            fill: $nd-accent;
         }
     }
 
@@ -170,7 +171,7 @@
 
         .delete-meeting:hover {
             &>svg {
-                fill: #4687ED;
+                fill: $nd-accent-hover;
             }
         }
     }

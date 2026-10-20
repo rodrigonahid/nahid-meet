@@ -1,0 +1,16 @@
+{
+    "name": "@rodrigonahid/design-tokens",
+    "version": "0.1.0",
+    "description": "Mini design system do Rodrigo Nahid: cores, fontes e raios em um arquivo só.",
+    "type": "module",
+    "license": "Apache-2.0",
+    "exports": {
+        "./tokens.json": "./dist/tokens.json",
+        "./tokens.css": "./dist/tokens.css",
+        "./tokens.scss": "./dist/_tokens.scss"
+    },
+    "files": [ "tokens.json", "dist" ],
+    "scripts": {
+        "build": "node build.mjs"
+    }
+}

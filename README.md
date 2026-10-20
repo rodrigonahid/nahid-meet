@@ -1,87 +1,154 @@
-# <p align="center">Jitsi Meet</p>
+# Nahid Meet
 
-Jitsi Meet is a set of Open Source projects which empower users to use and deploy
-video conferencing platforms with state-of-the-art video quality and features.
+Videochamadas privadas no navegador, com a minha identidade visual. **Baseado no
+[Jitsi Meet](https://github.com/jitsi/jitsi-meet)** (Apache 2.0), sem afiliação com o
+projeto Jitsi.
 
-<hr />
+É um *fork fino*: só o frontend web, com mudanças concentradas em tema, marca e textos.
+Nenhuma lógica foi alterada. O back-end (Prosody, Jicofo, JVB) roda com as imagens
+oficiais do [docker-jitsi-meet](https://github.com/jitsi/docker-jitsi-meet).
 
-<p align="center">
-<img src="https://raw.githubusercontent.com/jitsi/jitsi-meet/master/readme-img1.png" width="900" />
-</p>
+- Arquivos alterados: [MODIFICATIONS.md](MODIFICATIONS.md)
+- Licença e créditos: [LICENSE](LICENSE), [NOTICE](NOTICE)
+- README original do Jitsi Meet: [README.upstream.md](README.upstream.md)
 
-<hr />
+## Como a marca entra no código
 
-Amongst others here are the main features Jitsi Meet offers:
+```
+design-system/tokens.json          ← fonte única: cores, fontes, raios
+        │  node design-system/build.mjs
+        ▼
+design-system/dist/
+  tokens.json   → react/features/base/ui/brandTokens.ts → tema MUI/JSS do Jitsi
+  _tokens.scss  → css/_variables.scss                  → SCSS legado
+  tokens.css    → (para outros projetos: variáveis --nd-*)
+```
 
-* Support for all current browsers
-* Mobile applications
-* Web and native SDKs for integration
-* HD audio and video
-* Content sharing
-* Raise hand and reactions
-* Chat with private conversations
-* Polls
-* Virtual backgrounds
+- `brandTokens.ts` só **mapeia** os tokens do design system para os nomes que o Jitsi usa
+  (`action01`, `surface02`, `textColor01`…). É aplicado por último em `utils.ts`, então o
+  tema do upstream continua valendo para o que não foi mapeado.
+- Para mudar o visual, edite `design-system/tokens.json` e rode `node design-system/build.mjs`.
+  Os arquivos de `dist/` ficam versionados para que outros projetos possam importá-los direto.
 
-And many more!
+### Reaproveitar o design system em outro projeto
 
-## Using Jitsi Meet
+O diretório `design-system/` é um pacote independente (`@rodrigonahid/design-tokens`), sem
+dependências:
 
-Using Jitsi Meet is straightforward, as it's browser based. Head over to [meet.jit.si](https://meet.jit.si) and give it a try. It's scalable and free to use. All you need is a Google, Facebook or GitHub account in order to start a meeting. All browsers are supported!
+```css
+@import "@rodrigonahid/design-tokens/tokens.css"; /* var(--nd-accent), var(--nd-radius-md)… */
+```
 
-Using mobile? No problem, you can either use your mobile web browser or our fully-featured
-mobile apps:
+```ts
+import tokens from '@rodrigonahid/design-tokens/tokens.json';
+```
 
-| Android | Android (F-Droid) | iOS |
-|:-:|:-:|:-:|
-| [<img src="resources/img/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=org.jitsi.meet) | [<img src="resources/img/f-droid-badge.png" height="50">](https://f-droid.org/packages/org.jitsi.meet/) | [<img src="resources/img/appstore-badge.png" height="50">](https://itunes.apple.com/us/app/jitsi-meet/id1165103905) |
+Enquanto ele não tiver repositório próprio, dá para instalar direto do GitHub ou copiar
+`design-system/dist/`.
 
-If you are feeling adventurous and want to get an early scoop of the features as they are being
-developed you can also sign up for our open beta testing here:
+## Desenvolvimento
 
-* [Android](https://play.google.com/apps/testing/org.jitsi.meet)
-* [iOS](https://testflight.apple.com/join/isy6ja7S)
+O upstream exige Node ≥ 24 e npm ≥ 11.
 
-## Running your own instance
+```bash
+npm ci
+node design-system/build.mjs
+make            # compila (webpack) e copia tudo para libs/ e css/all.css
+make dev        # servidor de desenvolvimento com hot reload
+```
 
-If you'd like to run your own Jitsi Meet installation head over to the [handbook](https://jitsi.github.io/handbook/docs/devops-guide/) to get started.
+`make dev` faz proxy para um back-end Jitsi; por padrão aponta para `https://alpha.jitsi.net`.
+Para usar o seu: `WEBPACK_DEV_SERVER_PROXY_TARGET=https://meet.rodrigonahid.com.br make dev`.
 
-We provide Debian packages and a comprehensive Docker setup to make deployments as simple as possible.
-Advanced users also have the possibility of building all the components from source.
+Se a máquina tiver outra versão do Node, use um container:
 
-You can check the latest releases [here](https://jitsi.github.io/handbook/docs/releases).
+```bash
+docker run --rm -it -u $(id -u):$(id -g) -e HOME=/tmp -v "$PWD":/app -w /app node:24 make
+```
 
-## Jitsi as a Service
+## Imagem Docker
 
-If you like the branding capabilities of running your own instance but you'd like
-to avoid dealing with the complexity of monitoring, scaling and updates, JaaS might be
-for you.
+O [Dockerfile](Dockerfile) compila o frontend num estágio `node:24` e copia o resultado por
+cima da imagem oficial `ghcr.io/jitsi/web`, na mesma versão do resto do stack. Nginx,
+templates de `config.js` e scripts de inicialização continuam sendo os oficiais.
 
-[8x8 Jitsi as a Service (JaaS)](https://jaas.8x8.vc) is an enterprise-ready video meeting platform that allows developers, organizations and businesses to easily build and deploy video solutions. With Jitsi as a Service we now give you all the power of Jitsi running on our global platform so you can focus on building secure and branded video experiences.
+```bash
+docker build -t ghcr.io/rodrigonahid/nahid-meet-web:stable-11248 .
+```
 
-## Documentation
+O workflow [nahid-image.yml](.github/workflows/nahid-image.yml) faz o mesmo a cada push na
+`main` e publica em `ghcr.io/rodrigonahid/nahid-meet-web` (tags `stable-11248`, `latest` e
+`sha-…`).
 
-All the Jitsi Meet documentation is available in [the handbook](https://jitsi.github.io/handbook/).
+Em forks o GitHub Actions começa desligado. Ao ligar, desligue os workflows do upstream,
+que não fazem sentido aqui:
 
-## Security
+```bash
+for w in ci.yml ci-lua.yml prosody-plugin-tests.yml release-rnsdk.yml stale.yml; do gh workflow disable "$w" -R rodrigonahid/nahid-meet; done
+```
 
-For a comprehensive description of all Jitsi Meet's security aspects, please check [this link](https://jitsi.org/security).
+## Sincronizar com o upstream
 
-For a detailed description of Jitsi Meet's End-to-End Encryption (E2EE) implementation,
-please check [this link](https://jitsi.org/e2ee-whitepaper/).
+A `main` parte de uma tag estável do Jitsi Meet. Atualizar é um merge da tag nova:
 
-For information on reporting security vulnerabilities in Jitsi Meet, see [SECURITY.md](./SECURITY.md).
+```bash
+git remote add upstream https://github.com/jitsi/jitsi-meet.git   # só na primeira vez
+git fetch upstream --tags
+git tag -l 'stable/jitsi-meet_*' | sort -V | tail -3                # escolha a nova tag
+git merge stable/jitsi-meet_NNNNN
+```
 
-## Contributing
+1. Conflitos costumam aparecer só nos arquivos de [MODIFICATIONS.md](MODIFICATIONS.md). Em
+   `README.md`, fique com a nossa versão. Nos demais, mantenha a mudança do upstream e
+   reaplique a linha da marca.
+2. Se o upstream adicionar tokens de cor novos em `react/features/base/ui/tokens.json`,
+   avalie se precisam entrar em `brandTokens.ts`.
+3. Procure novos azuis fixos no SCSS: `grep -rniE '#(4687ED|246FE5|0056E0|0074E0|0376DA)' css`.
+4. Atualize a versão em **três** lugares, sempre igual à tag do
+   [docker-jitsi-meet](https://github.com/jitsi/docker-jitsi-meet/releases)
+   (`stable-NNNNN`): `ARG JITSI_VERSION` no `Dockerfile`, `JITSI_VERSION` no workflow e
+   `JITSI_IMAGE_VERSION`/`NAHID_MEET_IMAGE` em `deploy/env.example`.
+5. `make`, confira no navegador e faça push.
 
-If you are looking to contribute to Jitsi Meet, first of all, thank you! Please
-see our [guidelines for contributing](CONTRIBUTING.md).
+## Deploy na VPS (2 vCPU / 4 GB)
 
-<br />
-<br />
+Arquivos em [deploy/](deploy): `env.example`, `docker-compose.override.yml`,
+`custom-config.js` e `Caddyfile.snippet`.
 
-<footer>
-<p align="center" style="font-size: smaller;">
-Built with ❤️ by the Jitsi team at <a href="https://8x8.com" target="_blank">8x8</a> and our community.
-</p>
-</footer>
+```bash
+cd /srv/apps
+git clone --depth 1 --branch stable-11248 https://github.com/jitsi/docker-jitsi-meet.git jitsi
+cd jitsi
+cp /caminho/nahid-meet/deploy/env.example .env
+cp /caminho/nahid-meet/deploy/docker-compose.override.yml .
+./gen-passwords.sh
+mkdir -p config/{web,transcripts,prosody/config,prosody/prosody-plugins-custom,jicofo,jvb,storage/web,storage/prosody,storage/transcripts}
+chown -R 1000:1000 config/storage   # os containers rodam como uid 1000
+cp /caminho/nahid-meet/deploy/custom-config.js config/web/
+docker compose up -d     # sobe web, prosody, jicofo e jvb; sem Jibri, Jigasi, Etherpad
+```
+
+Depois:
+
+- DNS: registro `A` de `meet.rodrigonahid.com.br` → `143.95.170.215`.
+- Firewall: liberar **UDP 10000** (mídia do JVB).
+- Caddy: colar `deploy/Caddyfile.snippet` em `/srv/caddy/Caddyfile` e recarregar.
+
+O que deixa o stack leve (nomes conferidos na tag `stable-11248`):
+
+| Opção | Valor | Onde |
+| --- | --- | --- |
+| `VIDEOBRIDGE_MAX_MEMORY` / `JICOFO_MAX_MEMORY` | `768m` / `384m` | `.env` |
+| `mem_limit` dos containers | web 256m, prosody 256m, jicofo 640m, jvb 1200m | override |
+| `ENABLE_P2P` | `1` (2 pessoas = sem passar pelo JVB) | `.env` |
+| `RESOLUTION` / `RESOLUTION_WIDTH` | `720` / `1280` | `.env` |
+| `config.channelLastN` | `4` | `custom-config.js` |
+| `ENABLE_RECORDING`, `ENABLE_TRANSCRIPTIONS` | `0` | `.env` |
+| Jibri, Jigasi, Etherpad, whiteboard | não sobem (arquivos `.yml` extras não são usados) | — |
+
+### Login por app externo (próxima etapa)
+
+O `.env` já traz, comentado, o bloco de JWT (`ENABLE_AUTH=1`, `AUTH_TYPE=jwt`,
+`JWT_APP_ID`, `JWT_APP_SECRET`, `JWT_ACCEPTED_ISSUERS`, `JWT_ACCEPTED_AUDIENCES`,
+`ENABLE_GUESTS`, `TOKEN_AUTH_URL`). O portal (Next.js + Better Auth com Google) assina o
+token com o mesmo segredo e redireciona para `https://meet.rodrigonahid.com.br/<sala>?jwt=…`.

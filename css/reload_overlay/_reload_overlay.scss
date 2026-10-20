@@ -1,3 +1,4 @@
+// Modificado no Nahid Meet: cores fixas trocadas por tokens do design system.
 .reload_overlay_title {
     display: block;
     font-size: 1rem;
@@ -19,7 +20,7 @@
     width: 180px;
 
     .progress-indicator-fill {
-        background: #0074E0;
+        background: $nd-accent;
         height: 100%;
         transition: width .5s;
     }

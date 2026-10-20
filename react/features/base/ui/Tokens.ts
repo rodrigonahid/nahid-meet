@@ -1,4 +1,6 @@
 /* eslint-disable @stylistic/no-multi-spaces */
+import { brandFont, brandShape } from './brandTokens';
+
 // Mapping between the token used and the color
 export const colorMap = {
     // ----- Surfaces -----
@@ -561,16 +563,10 @@ export const colorMap = {
 };
 
 
-export const font = {
-    weightRegular: 400,
-    weightSemiBold: 600
-};
+// Modificado no Nahid Meet: fonte e raios vêm do design system (ver brandTokens.ts).
+export const font = brandFont;
 
-export const shape = {
-    borderRadius: 6,
-    circleRadius: 50,
-    boxShadow: 'inset 0px -1px 0px rgba(255, 255, 255, 0.15)'
-};
+export const shape = brandShape;
 
 export const spacing = [ 0, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128 ];
 

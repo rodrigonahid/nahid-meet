@@ -1,3 +1,4 @@
+// Modificado no Nahid Meet: cores fixas trocadas por tokens do design system.
 @use './variables';
 
 #chat-conversation-container {
@@ -26,7 +27,7 @@
         outline: 0;
         margin: 4px;
         border-radius: 0 0 variables.$borderRadius variables.$borderRadius;
-        box-shadow: 0px 0px 0px 2px #4687ed; // focus01/primary07
+        box-shadow: 0px 0px 0px 2px $nd-focus; // focus01/primary07
     }
 
     & > :first-child {

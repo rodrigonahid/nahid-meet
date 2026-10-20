@@ -1,0 +1,11 @@
+.git
+node_modules
+build
+libs
+css/all.css
+android
+ios
+react-native-sdk
+tests
+deploy
+*.log

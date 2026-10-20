@@ -1,3 +1,4 @@
+// Modificado no Nahid Meet: página inicial no tema escuro da marca (tokens do design system).
 body.welcome-page {
     background: inherit;
     overflow: auto;
@@ -5,7 +6,7 @@ body.welcome-page {
 
 .welcome {
     background-image: $welcomePageBackground;
-    background-color: #fff;
+    background-color: $nd-bg;
     display: flex;
     flex-direction: column;
     font-family: $welcomePageFontFamily;
@@ -19,7 +20,7 @@ body.welcome-page {
         background-repeat: $welcomePageHeaderBackgroundRepeat;
         background-size: $welcomePageHeaderBackgroundSize;
         padding: $welcomePageHeaderPadding;
-        background-color: #131519;
+        background-color: $nd-bg;
         overflow: hidden;
         position: relative;
 
@@ -114,7 +115,7 @@ body.welcome-page {
         }
 
         ::placeholder {
-            color: #253858;
+            color: $nd-text-muted;
         }
 
         #enter_room {
@@ -128,12 +129,13 @@ body.welcome-page {
             .join-meeting-container {
                 margin: $welcomePageEnterRoomMargin;
                 padding: $welcomePageEnterRoomPadding;
-                border-radius: 4px;
-                background-color: #fff;
+                border-radius: $nd-radius-lg;
+                background-color: $nd-surface-raised;
+                border: 1px solid $nd-border-strong;
                 display: flex;
                 width: 100%;
                 text-align: left;
-                color: #253858;
+                color: $nd-text;
             }
 
             .enter-room-input-container {
@@ -141,9 +143,10 @@ body.welcome-page {
                 padding-right: 4px;
 
                 .enter-room-input {
-                    border-radius: 4px;
+                    border-radius: $nd-radius-md;
                     border: 0;
-                    background: #fff;
+                    background: $nd-surface-raised;
+                    color: $nd-text;
                     display: inline-block;
                     height: 50px;
                     width: 100%;
@@ -151,7 +154,7 @@ body.welcome-page {
                     padding-left: 10px;
 
                     &.focus-visible {
-                        outline: auto 2px #005fcc;
+                        outline: auto 2px $nd-focus;
                     }
                 }
             }
@@ -188,17 +191,17 @@ body.welcome-page {
         }
 
         .tab-buttons {
-            background-color: #c7ddff;
-            border-radius: 6px;
-            color: #0163FF;
+            background-color: $nd-surface;
+            border-radius: $nd-radius-md;
+            color: $nd-text-muted;
             font-size: 0.875rem;
             line-height: 1.125rem;
             margin: 4px;
             display: $welcomePageTabButtonsDisplay;
 
             [role="tab"] {
-                background-color: #c7ddff;
-                border-radius: 7px;
+                background-color: $nd-surface;
+                border-radius: $nd-radius-md;
                 cursor: pointer;
                 display: $welcomePageTabDisplay;
                 flex-grow: 1;
@@ -209,7 +212,8 @@ body.welcome-page {
                 border: 0;
 
                 &[aria-selected="true"] {
-                    background-color: #FFF;
+                    background-color: $nd-surface-raised;
+                    color: $nd-text;
                 }
             }
 
@@ -220,7 +224,7 @@ body.welcome-page {
         border: 0;
         font-size: 0.875rem;
         background: $welcomePageButtonBg;
-        border-radius: 3px;
+        border-radius: $nd-radius-md;
         color: #FFFFFF;
         cursor: pointer;
         padding: 16px 20px;
@@ -277,7 +281,7 @@ body.welcome-page {
     }
 
     .welcome-cards-container {
-        color:#131519;
+        color: $nd-text;
         padding-top: 40px;
     }
 
@@ -300,24 +304,25 @@ body.welcome-page {
 
     .welcome-card {
         width: 100%;
-        border-radius: 8px;
+        border-radius: $nd-radius-lg;
 
         &--dark {
-            background: #444447;
+            background: $nd-surface-raised;
             color: #fff;
         }
 
         &--blue {
-            background: #D5E5FF;
+            background: $nd-surface;
+            border: 1px solid $nd-border;
         }
 
         &--grey {
-            background: #F2F3F4;
+            background: $nd-surface;
         }
     }
 
     .welcome-footer {
-        background: #131519;
+        background: $nd-bg-alt;
         color: #fff;
         margin-top: 40px;
         position: relative;

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 760">
+  <!-- transparent background -->
+  <g>
+    <!-- top-left: mint square with R -->
+    <rect fill="#a7f3d0" x="90" y="90" width="246" height="246"/>
+    <path fill="#0d3d2e" d="M186,148h52c15.6,0,27.9,3.6,36.9,10.8,9,7.2,13.5,17.4,13.5,30.6
+      c0,10.8-3.6,19.8-10.8,27-7.2,7.2-16.8,11.4-28.8,12.6l33.6,51h-33l-30.6-47.4h-20.4v47.4H186V148z
+      M203.4,219.6h30c11.4,0,19.2-5.4,19.2-16.2c0-10.2-7.8-16.2-19.2-16.2h-30V219.6z"/>
+    <!-- top-right: green square with N -->
+    <rect fill="#35d3a2" x="424" y="90" width="246" height="246"/>
+    <path fill="#0d3d2e" d="M461.6,298V148h32.4l66.6,84V148h28.8v150h-28.8l-66.6-84v84H461.6z"/>
+    <!-- bottom-left: mint square with diamond (rotated square inside, not overflowing) -->
+    <rect fill="#a7f3d0" x="90" y="424" width="246" height="246"/>
+    <rect fill="#0d3d2e" x="155" y="489" width="116" height="116" transform="rotate(45 213 547)"/>
+    <!-- bottom-right: green square with centered dot -->
+    <rect fill="#35d3a2" x="424" y="424" width="246" height="246"/>
+    <circle fill="#0d3d2e" cx="547" cy="547" r="52"/>
+  </g>
+</svg>
